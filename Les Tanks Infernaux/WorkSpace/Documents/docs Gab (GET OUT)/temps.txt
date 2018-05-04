@@ -1,0 +1,35 @@
+Vendredi 17 mars:
+début : 15h30
+fin : 16h30
+début : 18h25
+fin : 19h25
+
+Mercredi 22 mars:
+début : 13h
+fin : 16h30
+Travail :
+Modifier le déplacement du tank IA (facile), il s'enfuit des tirs (à remodifier par la suite)
+
+Jeudi 23 mars :
+début : 13h
+fin : 17h15
+Travail :
+Modifier le déplacment du tank IA (facile), il s'enfuit des tirs de manière moins prévisible.
+Problèmes : Quelques-unes des méthodes auxquelles j'ai pensées étaient problématiques et j'ai dû grandement les modifier
+
+Samedi 35 mars:
+temps travail : 1 heure
+Travil :
+Commencer à travailler le son lors du déplacement du tank joueur
+Problèmes : Il n'y a plus le code que j'avais fait le 23 mars à propos du déplacement IA
+
+Mardi 28 mars:
+Temps travail : 30 minutes
+Travail :
+Terminer le travail sur le son du déplacement du tank joueur
+
+Mercredi 29 mars:
+Temps travail: 3h40
+Travail : 
+Retravailler l'IA facile pour qu'il évite aussi les fonctions (armes énergies)
+Problèmes : Exception qui surviennent quelques fois, sinon application fonctionne bien. Aussi, le service arrête de fonctionner quelques fois.

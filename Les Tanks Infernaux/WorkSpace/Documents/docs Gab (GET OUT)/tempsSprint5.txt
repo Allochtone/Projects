@@ -1,0 +1,25 @@
+Vendredi 14 avril:
+Temps de travail : 1h30
+Travail effectué: Mettre à jour ma documentation
+Faire le tir Moyen et modifier quelques méthodes pour que ce soit plus balancé
+
+Mercredi 19 avril:
+Temps de travail : 3h
+Travail effectué: Essayer différentes manières de faire bouger le tank ennemi (pas d'esquive), sans succès.
+
+Jeudi 20 avril:
+Temps de travail : 4h30
+Travail effectué: Aider dans les fenêtres de fin de partie
+Encore essayer des moyens de faire bouger le tank ennemi...
+
+Dimanche 23 avril:
+Temps de travail : 1h30
+Travail effectué: Commencer à travailler un algo qui permet au tank ennemi de bouger après X secondes
+
+Lundi 24 avril:
+Temps de travail : 1h
+Travail effectué: Faire un algo de mouvement de IA difficile simpliste, mais qui fonctionne. Il resterais à en faire un plus complexe.
+
+Mardi 25 avril:
+Temps de travail : 1h
+Travail effectué: Modifier mes algo de mouvement de l'IA difficile et faire en sorte que l'IA moyen se déplace aussi.

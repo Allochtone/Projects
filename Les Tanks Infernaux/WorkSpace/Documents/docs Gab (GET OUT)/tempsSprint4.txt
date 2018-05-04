@@ -1,0 +1,16 @@
+Dimanche 2 avril:
+Temps de travail: 2h
+Travail effectué: 
+-Mettre des boutons pour recommencer le jeu ou retourner au menu principal.
+-Tenter d'améliorer les bruits lors des déplacments
+Problèmes:	Lors des déplacements de l'IA, le jeu lag beaucoup. Je pense aoir une idée du pourquoi, mais je ne sais pas encore comment 
+améliorer le tout.
+		J'ai eu du mal a essayer de faire quelque chose de beau et de caché pour les boutons, mais toutes mes tentatives se solvaient
+		par des échecs. J'ai donc opté pour deux boutons dans le haut de l'écran.
+
+
+Mercredi 5 avril:
+Temps de travail: 3 heures
+Travail effectué:
+-Commencer à travailler sur le tir de l'IA facile...
+Problèmes:	Je ne peux ajouter un projectile selon un calcul qui se décide quand le faire dans le Service du déroulement, mais le tout envoie plein d'exceptions.
