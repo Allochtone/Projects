@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minHeight="680.0" minWidth="950.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlleurs.OptionControlleur">
+   <center>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="695.0" prefWidth="957.0">
+         <children>
+            <ImageView fitHeight="789.0" fitWidth="1118.0" layoutX="-25.0" layoutY="-16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../res/tankOptions.jpg" />
+               </image>
+            </ImageView>
+            <Slider fx:id="volumeMusique" blockIncrement="0.1" layoutX="735.0" layoutY="35.0" majorTickUnit="0.1" max="1.0" minorTickCount="0" value="1.0" />
+            <Label layoutX="586.0" layoutY="32.0" prefHeight="18.0" prefWidth="149.0" text="Volume (musique)">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+            </Label>
+            <Button fx:id="Retour" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#retourMenu" style="-fx-background-color: #009933;" textFill="WHITE">
+               <graphic>
+                  <ImageView fitHeight="66.0" fitWidth="66.0" pickOnBounds="true" preserveRatio="true" rotate="-270.0">
+                     <image>
+                        <Image url="@../../res/retourMenu.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <VBox layoutX="689.0" layoutY="109.0" prefHeight="110.0" prefWidth="124.0">
+               <children>
+                  <Label text="Difficulté Terrain">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="RadioAleatoire" mnemonicParsing="false" onAction="#handleRadioAction" text="Aléatoire">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="diff" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="RadioFacile" mnemonicParsing="false" onAction="#handleRadioAction" text="Facile" toggleGroup="$diff">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="RadioMoyen" mnemonicParsing="false" onAction="#handleRadioAction" text="Moyen" toggleGroup="$diff">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="RadioDifficile" mnemonicParsing="false" onAction="#handleRadioAction" text="Difficile" toggleGroup="$diff" />
+               </children>
+            </VBox>
+            <VBox layoutX="843.0" layoutY="109.0" prefHeight="118.0" prefWidth="143.0">
+               <children>
+                  <Label text="Difficulté Vents">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="VentFaible" mnemonicParsing="false" onAction="#handleButtonAction" text="Faible">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="vent" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="VentNormal" mnemonicParsing="false" onAction="#handleButtonAction" text="Normal" toggleGroup="$vent">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="VentIntense" mnemonicParsing="false" onAction="#handleButtonAction" text="Intense" toggleGroup="$vent">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="VentTempete" mnemonicParsing="false" onAction="#handleButtonAction" text="Tempête" toggleGroup="$vent">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </RadioButton>
+               </children>
+            </VBox>
+            <VBox layoutX="843.0" layoutY="233.0" prefHeight="115.0" prefWidth="139.0">
+               <children>
+                  <Label text="Difficulté IA">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="FacileAI" mnemonicParsing="false" onAction="#handleAIAction" text="Facile">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="ai" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="MoyenAI" mnemonicParsing="false" onAction="#handleAIAction" text="Moyen" toggleGroup="$ai">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="AimbotAI" mnemonicParsing="false" onAction="#handleAIAction" text="Aimbot" toggleGroup="$ai" />
+               </children>
+            </VBox>
+            <Label layoutX="593.0" layoutY="69.0" prefHeight="18.0" prefWidth="149.0" text="Volume (sons)">
+               <font>
+                  <Font name="Bauhaus 93" size="16.0" />
+               </font>
+            </Label>
+            <Slider fx:id="volumeSons" blockIncrement="0.1" layoutX="735.0" layoutY="72.0" majorTickUnit="0.1" max="1.0" minorTickCount="0" value="1.0" />
+            <VBox layoutX="689.0" layoutY="236.0" prefHeight="110.0" prefWidth="124.0">
+               <children>
+                  <Label text="Type du Terrain">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <RadioButton fx:id="typeTerrainAleatoire" mnemonicParsing="false" onAction="#handleTypeterrain" selected="true" text="Aléatoire">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <toggleGroup>
+                        <ToggleGroup fx:id="type" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="typeTerrainGazon" mnemonicParsing="false" onAction="#handleTypeterrain" text="Gazon" toggleGroup="$type">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="typeTerrainBoue" mnemonicParsing="false" onAction="#handleTypeterrain" text="Boue" toggleGroup="$type">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </RadioButton>
+                  <RadioButton fx:id="typeTerrainAsphalt" mnemonicParsing="false" onAction="#handleTypeterrain" text="Asphalt" toggleGroup="$type" />
+               </children>
+            </VBox>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

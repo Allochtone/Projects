@@ -1,0 +1,382 @@
+package controllers;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+
+import game.Chronometre;
+import game.GameThread;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+public class GameController {
+	private GameThread game;
+	private Chronometre chrono;
+	private TableView<Person> table;
+	private File savefileTrivial = new File(
+			GameController.class.getClassLoader().getResource("").getPath() + "recordsTrivial.txt");
+	private File savefileCozy = new File(
+			GameController.class.getClassLoader().getResource("").getPath() + "recordsCozy.txt");
+	private File savefileTricky = new File(
+			GameController.class.getClassLoader().getResource("").getPath() + "recordsTricky.txt");
+	private File savefileFussy = new File(
+			GameController.class.getClassLoader().getResource("").getPath() + "recordsFussy.txt");
+	private int difficulte;
+	private int players = 1;
+
+	@FXML
+	private Pane gameZone;
+
+	@FXML
+	private VBox controlVbox;
+
+	@FXML
+	private ProgressBar healthPointPB;
+
+	@FXML
+	private Label temps;
+
+	@FXML
+	private Label round;
+	
+	private ProgressBar healthPointPB1 = healthPointPB;
+	private ProgressBar healthPointPB2 = healthPointPB;
+	private ProgressBar healthPointPB3 = healthPointPB;
+
+	@FXML
+	void initialize() {
+		game = new GameThread();
+		gameZone.setMinSize(605, 605);
+		gameZone.setMaxSize(605, 605);
+		chrono = new Chronometre();
+		temps.textProperty().bind(chrono.messageProperty());
+		chrono.start();
+		round.textProperty().bind(game.vague.asString());
+		gameZone.getChildren().add(game.setGroupe());
+		switch (players) {
+		case 4:
+			gameZone.getChildren().add(game.getJoueurs().get(3).getImage());
+			healthPointPB.progressProperty().bind(game.getJoueurs().get(3).pointVie());
+		case 3:
+			gameZone.getChildren().add(game.getJoueurs().get(2).getImage());
+			healthPointPB.progressProperty().bind(game.getJoueurs().get(2).pointVie());
+		case 2:
+			gameZone.getChildren().add(game.getJoueurs().get(1).getImage());
+			healthPointPB.progressProperty().bind(game.getJoueurs().get(1).pointVie());
+		case 1:
+			gameZone.getChildren().add(game.getJoueurs().get(0).getImage());
+			healthPointPB.progressProperty().bind(game.getJoueurs().get(0).pointVie());// TODO change
+		}
+		// gameZone.getChildren().add(game.getJoueurs().get(0).getImage());
+		// healthPointPB.progressProperty().bind(game.getJoueurs().get(0).pointVie());
+		game.setOnCancelled(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent event) {
+				chrono.cancel();
+				sauvegarderInitialize();
+			}
+		});
+		game.start();
+
+	}
+
+	@FXML
+	void immobile(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.LEFT)) {
+			game.getJoueurs().get(0).setDirections(false, 0);
+		} else if (event.getCode().equals(KeyCode.UP)) {
+			game.getJoueurs().get(0).setDirections(false, 1);
+		} else if (event.getCode().equals(KeyCode.RIGHT)) {
+			game.getJoueurs().get(0).setDirections(false, 2);
+		} else if (event.getCode().equals(KeyCode.DOWN)) {
+			game.getJoueurs().get(0).setDirections(false, 3);
+		}
+	}
+
+	@FXML
+	void mouvement(KeyEvent event) {
+		if (event.getCode().equals(KeyCode.LEFT)) {
+			game.getJoueurs().get(0).setDirections(true, 0);
+		} else if (event.getCode().equals(KeyCode.UP)) {
+			game.getJoueurs().get(0).setDirections(true, 1);
+		} else if (event.getCode().equals(KeyCode.RIGHT)) {
+			game.getJoueurs().get(0).setDirections(true, 2);
+		} else if (event.getCode().equals(KeyCode.DOWN)) {
+			game.getJoueurs().get(0).setDirections(true, 3);
+		}
+	}
+
+	private void sauvegarderInitialize() {
+		VBox vbox = new VBox();
+		gameZone.getChildren().clear();
+		final TextField textfield = new TextField();
+		Button bouton2 = new Button("Nope");
+		Button bouton = new Button("Save");
+		bouton.setStyle("-fx-text-fill: #ffffff;" + "-fx-background-color: #000000;" + "-fx-background-radius: 6, 5;"
+				+ "-fx-background-insets: 0, 1;"
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );"
+				+ "-fx-font-size: 20;");
+		bouton2.setStyle("-fx-text-fill: #ffffff;" + "-fx-background-color: #000000;" + "-fx-background-radius: 6, 5;"
+				+ "-fx-background-insets: 0, 1;"
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );"
+				+ "-fx-font-size: 20;");
+		Label nom = new Label("Player's name:");
+		HBox hbox2 = new HBox();
+		nom.setStyle("-fx-text-fill: #ffffff;" + "-fx-background-color: #000000;" + "-fx-background-radius: 6, 5;"
+				+ "-fx-background-insets: 0, 1;"
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );"
+				+ "-fx-font-size: 20;");
+		hbox2.getChildren().add(nom);
+		hbox2.setTranslateY(100);
+		HBox hbox = new HBox();
+		hbox.getChildren().addAll(bouton, bouton2);
+		bouton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				sauvegarder(textfield.getText());
+				tableviewInitialize();
+			}
+		});
+		bouton2.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuVue.fxml"));
+				BorderPane root = null;
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+				}
+				Stage stage = (Stage) gameZone.getScene().getWindow();
+				stage.setScene(new Scene(root));
+				MenuController mc = loader.getController();
+				stage.setTitle("OverTale");
+				stage.setResizable(true);
+				if (MenuController.fullscreen) {
+					stage.setFullScreen(true);
+					stage.setFullScreenExitHint("");
+				}
+				stage.show();
+				game.reset();
+				game.initilaze();
+				gameZone.getChildren().clear();
+				controlVbox.getChildren().clear();
+			}
+		});
+		hbox2.setAlignment(Pos.BOTTOM_CENTER);
+		vbox.getChildren().addAll(hbox2, textfield, hbox);
+		hbox.setSpacing(100);
+		vbox.setSpacing(100);
+		vbox.setTranslateX(175);
+		vbox.setTranslateY(100);
+		gameZone.getChildren().add(vbox);
+
+	}
+
+	private void sauvegarder(String string) {
+		File file = null;
+		switch (difficulte) {
+		case 0:
+			file = savefileTrivial;
+			break;
+		case 1:
+			file = savefileCozy;
+			break;
+		case 2:
+			file = savefileTricky;
+			break;
+		case 3:
+			file = savefileFussy;
+			break;
+
+		default:
+			break;
+		}
+		try {
+			PrintWriter pw = new PrintWriter(new FileWriter(file, true));
+			pw.println(string + "," + chrono.getMessage() + "," + game.vague.get());
+			pw.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void getProductsFromFile() {
+		try {
+			File file = null;
+			switch (difficulte) {
+			case 0:
+				file = savefileTrivial;
+				break;
+			case 1:
+				file = savefileCozy;
+				break;
+			case 2:
+				file = savefileTricky;
+				break;
+			case 3:
+				file = savefileFussy;
+				break;
+
+			default:
+				break;
+			}
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			String line;
+			String[] array;
+
+			while ((line = br.readLine()) != null) {
+				array = line.split(",");
+				table.getItems().add(new Person(array[0], array[1], array[2]));
+			}
+
+			br.close();
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	private void tableviewInitialize() {
+
+		gameZone.getChildren().clear();
+		controlVbox.getChildren().clear();
+		Button bouton = new Button("ok");
+		bouton.setStyle("-fx-text-fill: #ffffff;" + "-fx-background-color: #000000;" + "-fx-background-radius: 6, 5;"
+				+ "-fx-background-insets: 0, 1;"
+				+ "-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.4) , 5, 0.0 , 0 , 1 );"
+				+ "-fx-font-size: 20;");
+		bouton.getStylesheets().add("/style/bouton.css"); // WTF CSS de marde
+		bouton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MenuVue.fxml"));
+				BorderPane root = null;
+				try {
+					root = loader.load();
+				} catch (IOException e) {
+				}
+				Stage stage = (Stage) gameZone.getScene().getWindow();
+				stage.setScene(new Scene(root));
+				MenuController mc = loader.getController();
+				stage.setTitle("OverTale");
+				stage.setResizable(true);
+				if (MenuController.fullscreen) {
+					stage.setFullScreen(true);
+					stage.setFullScreenExitHint("");
+				}
+				stage.show();
+				game.reset();
+				game.initilaze();
+				gameZone.getChildren().clear();
+				controlVbox.getChildren().clear();
+			}
+		});
+		controlVbox.getChildren().add(bouton);
+		table = new TableView<Person>();
+		TableColumn<Person, String> playerCol = new TableColumn<Person, String>("Player");
+		playerCol.prefWidthProperty().bind(table.widthProperty().divide(3));
+		playerCol.setCellValueFactory(new PropertyValueFactory<Person, String>("Player"));
+
+		TableColumn<Person, String> timeCol = new TableColumn<Person, String>("Time");
+		timeCol.prefWidthProperty().bind(table.widthProperty().divide(3).subtract(1));
+		timeCol.setCellValueFactory(new PropertyValueFactory<Person, String>("Time"));
+
+		TableColumn<Person, String> waveCol = new TableColumn<Person, String>("Wave");
+		waveCol.prefWidthProperty().bind(table.widthProperty().divide(3).subtract(1));
+		waveCol.setCellValueFactory(new PropertyValueFactory<Person, String>("Wave"));
+
+		getProductsFromFile();
+		table.getColumns().add(playerCol);
+		table.getColumns().add(timeCol);
+		table.getColumns().add(waveCol);
+		gameZone.getChildren().add(table);
+		table.setPrefSize(597, 597);
+		table.setTranslateX(4);
+		table.setTranslateY(4);
+		table.setMinSize(597, 597);
+		table.getStylesheets().add("/style/listview.css");
+	}
+
+	public static class Person {
+		private final SimpleStringProperty player;
+		private final SimpleStringProperty time;
+		private final SimpleStringProperty wave;
+
+		public Person(String player, String time, String wave) {
+			this.player = new SimpleStringProperty(player);
+			this.time = new SimpleStringProperty(time);
+			this.wave = new SimpleStringProperty(wave);
+		}
+
+		public String getPlayer() {
+			return player.get();
+		}
+
+		public void setPlayer(String newplayer) {
+			player.set(newplayer);
+		}
+
+		public String getTime() {
+			return time.get();
+		}
+
+		public void setTime(String newtime) {
+			time.set(newtime);
+		}
+
+		public String getWave() {
+			return wave.get();
+		}
+
+		public void setWave(String newwave) {
+			wave.set(newwave);
+		}
+
+	}
+
+	public void setdifficulte(int i) {
+		this.difficulte = i;
+		GameThread.setdifficulte(i);
+
+	}
+
+	public static void main(String[] args) {
+	}
+
+	public int getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(int players) {
+		this.players = players;
+	}
+
+}

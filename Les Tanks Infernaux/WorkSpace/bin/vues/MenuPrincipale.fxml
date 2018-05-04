@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="942.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlleurs.AccueilControlleur">
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fx:id="MenuImage" fitHeight="691.0" fitWidth="996.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../res/tankMenu.jpg" />
+               </image></ImageView>
+            <ImageView blendMode="HARD_LIGHT" fitHeight="291.0" fitWidth="441.0" layoutX="564.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../res/textureMetal.jpg" />
+               </image>
+            </ImageView>
+            <Button fx:id="QuitterButton" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#quitter" prefHeight="50.0" prefWidth="184.0" style="-fx-background-color: #cc0000;" text="Quitter" textFill="WHITE">
+               <font>
+                  <Font name="Stencil" size="33.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="JouerButton" layoutX="588.0" layoutY="35.0" mnemonicParsing="false" onAction="#afficherJeu" prefHeight="74.0" prefWidth="316.0" style="-fx-background-color: #248f24;" text="Jouer">
+               <font>
+                  <Font name="Stencil" size="33.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Button fx:id="OptionButton" layoutX="588.0" layoutY="160.0" mnemonicParsing="false" onAction="#options" prefHeight="74.0" prefWidth="316.0" style="-fx-background-color: #248f24;" text="Options">
+               <font>
+                  <Font name="Stencil" size="33.0" />
+               </font>
+               <effect>
+                  <DropShadow />
+               </effect>
+            </Button>
+            <Label layoutX="26.0" layoutY="550.0" text="Les Tanks Infernale">
+               <font>
+                  <Font name="Monospaced Bold" size="74.0" />
+               </font>
+               <textFill>
+                  <LinearGradient endX="1.0" endY="1.0" startY="1.0">
+                     <stops>
+                        <Stop color="RED" />
+                        <Stop color="RED" offset="0.007662835249042145" />
+                        <Stop color="#fffe00" offset="0.1682268831220128" />
+                        <Stop color="#15ff00" offset="0.33301734012718726" />
+                        <Stop color="#00aaff" offset="0.49847928269542185" />
+                        <Stop color="#4400ff" offset="0.6576213611407355" />
+                        <Stop color="#ff00e2" offset="0.8314176245210724" />
+                        <Stop color="WHITE" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </textFill>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+</BorderPane>

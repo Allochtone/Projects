@@ -1,0 +1,105 @@
+package controllers;
+
+import java.io.IOException;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
+public class MenuController {
+	public static final String NOMAPP = "OverTale";
+	private SoloGameSelectionController sgsc = new SoloGameSelectionController();
+	private MultiGameSelectionController mgsc = new MultiGameSelectionController();
+	private Stage stage;
+	private BorderPane root;
+	public static boolean fullscreen = false;
+	
+	@FXML
+	void initialize(){
+		if(fullscreen){
+			fullscreenBox.setSelected(true);
+		}
+	}
+	
+	@FXML
+    private Button soloButton;
+
+    @FXML
+    private Button multiplayerButton;
+
+    @FXML
+    private CheckBox fullscreenBox;
+
+    @FXML
+    void buttonilluminer(MouseEvent event) {
+    	if(event.getSource()==soloButton){
+    		soloButton.setEffect(new Glow(0.8));
+    	}else{
+    		multiplayerButton.setEffect(new Glow(0.8));
+    	}
+    }
+
+    @FXML
+    void buttoneteindre(MouseEvent event) {
+    	if(event.getSource()==soloButton){
+    		soloButton.setEffect(null);
+    	}else{
+    		multiplayerButton.setEffect(null);
+    	}
+    }
+
+    @FXML
+    void fullscreenAction(ActionEvent event) throws IOException {
+    	if(fullscreenBox.isSelected()){
+    		((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(true);
+    	}else{
+    		((Stage) ((Node) event.getSource()).getScene().getWindow()).setFullScreen(false);
+    	}
+    }
+
+    @FXML
+    void multiplayerMode(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/MultiGameSelection.fxml"));
+    	root = loader.load();
+    	stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	stage.setScene(new Scene(root));
+    	mgsc = loader.getController();
+		stage.setTitle("OverTale");
+		stage.setResizable(true);
+		if(fullscreenBox.isSelected()){
+			stage.setFullScreenExitHint("");
+			fullscreen = true;
+			stage.setFullScreen(true);
+		}
+		stage.show();
+    }
+    
+
+    @FXML
+    void soloMode(ActionEvent event) throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/SoloGameSelection.fxml"));
+    	root = loader.load();
+    	stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	stage.setScene(new Scene(root));
+    	sgsc = loader.getController();
+		stage.setTitle("OverTale");
+		stage.setResizable(true);
+		if(fullscreenBox.isSelected()){
+			stage.setFullScreenExitHint("");
+			fullscreen = true;
+			stage.setFullScreen(true);
+		}
+		stage.show();
+    }
+	
+
+
+}

@@ -1,0 +1,13 @@
+.progress-bar-vie{
+	-fx-accent: #e04050;
+}
+
+.progress-bar-gaz{
+	-fx-accent: #eae46d;
+}
+
+.back{
+	-fx-background-image: url("background.jpg");
+	-fx-background-size: 1224,160;
+    -fx-background-repeat: no-repeat;
+}

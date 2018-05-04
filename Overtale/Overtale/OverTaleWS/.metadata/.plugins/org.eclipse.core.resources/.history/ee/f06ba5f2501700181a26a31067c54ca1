@@ -1,0 +1,124 @@
+package controllers;
+
+import java.io.IOException;
+
+import javafx.animation.Animation;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.effect.Glow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class MultiGameSelectionController {
+	private GameController gc = null;
+	private Stage stage = null;
+	private BorderPane root = null;
+	
+    @FXML
+    private Button trivialBouton;
+
+    @FXML
+    private Button cozyBouton;
+
+    @FXML
+    private Button trickyBouton;
+
+    @FXML
+    private Button fussyBouton;
+
+    @FXML
+    private Slider playerSlider;
+
+    @FXML
+    void boutonAction(ActionEvent event) throws IOException {
+    	gc = new GameController((int)playerSlider.getValue());
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("/vue/GameVue.fxml"));
+    	root = loader.load();
+    	stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    	stage.setScene(new Scene(root));
+    	gc = loader.getController();
+		stage.setTitle("OverTale");
+		stage.setResizable(true);
+		if(MenuController.fullscreen){
+			stage.setFullScreen(true);
+			stage.setFullScreenExitHint("");
+		}
+		stage.show();
+		if(event.getSource()==trivialBouton){
+    		gc.setdifficulte(0);
+    	}else
+    		if(event.getSource()==cozyBouton){
+    			gc.setdifficulte(1);
+    	}else
+    		if(event.getSource()==trickyBouton){
+    			gc.setdifficulte(2);
+    	}else
+    		if(event.getSource()==fussyBouton){
+    			gc.setdifficulte(3);
+    	}
+    }
+    
+    @FXML
+    void initialize(){
+    	rotation(trivialBouton,250);
+    	rotation(cozyBouton,500);
+    	rotation(trickyBouton,750);
+    	rotation(fussyBouton,1000);
+    }
+    
+    @FXML
+    void boutonEntered(MouseEvent event) {
+    	if(event.getSource()==trivialBouton){
+    		trivialBouton.setEffect(new Glow(0.8));
+    	}else
+    		if(event.getSource()==cozyBouton){
+    			cozyBouton.setEffect(new Glow(0.8));
+    	}else
+    		if(event.getSource()==trickyBouton){
+    			trickyBouton.setEffect(new Glow(0.8));
+    	}else
+    		if(event.getSource()==fussyBouton){
+    			fussyBouton.setEffect(new Glow(0.8));
+    	}
+    }
+
+    @FXML
+    void boutonExited(MouseEvent event) {
+    	if(event.getSource()==trivialBouton){
+    		trivialBouton.setEffect(null);
+    	}else
+    		if(event.getSource()==cozyBouton){
+    			cozyBouton.setEffect(null);
+    	}else
+    		if(event.getSource()==trickyBouton){
+    			trickyBouton.setEffect(null);
+    	}else
+    		if(event.getSource()==fussyBouton){
+    			fussyBouton.setEffect(null);
+    	}
+    }
+    
+    private void rotation(Node node,int delay){
+    	RotateTransition rt = new RotateTransition();
+    	rt.setAutoReverse(false);
+    	rt.setByAngle(0);
+    	rt.setToAngle(360);
+    	rt.setInterpolator(Interpolator.LINEAR);
+    	rt.setDelay(Duration.millis(delay));
+    	rt.setCycleCount(Animation.INDEFINITE);
+    	rt.setDuration(Duration.millis(3000));
+    	rt.setNode(node);
+    	rt.play();
+    }
+    
+
+}
